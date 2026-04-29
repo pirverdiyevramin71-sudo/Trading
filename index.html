@@ -782,6 +782,540 @@ select.pnl-inp{cursor:pointer}
 <div id="page-setup" class="page">
   <div class="sec"><span class="sec-label">008 · QURULUM — ADDIM-ADDIM</span><div class="sec-line"></div><span class="sec-sub">7 GÜN · DƏQİQ SIRA</span></div>
 
+  <!-- ======== P&L TRACKER ======== --> bu kodun harasina <!-- ═══════════════════════════════════════════
+  BU BLOKU YAPIŞDIR:
+  <div class="sec">008 · QURULUM...</div>
+  xəttindən SONRA,
+  <div class="prog-bar-big"> xəttindən ƏVVƏL
+═══════════════════════════════════════════ -->
+
+<!-- VERSİYA SEÇİCİ -->
+<style>
+.ver-switch{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:16px;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden}
+.ver-btn{padding:14px 12px;background:var(--bg3);border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:var(--text2);transition:all 0.2s;text-align:center;border-right:1px solid var(--border)}
+.ver-btn:last-child{border-right:none}
+.ver-btn.active-ver{background:var(--gold-bg);color:var(--gold);border-bottom:2px solid var(--gold)}
+.ver-badge{display:inline-block;font-size:9px;padding:2px 6px;border-radius:3px;margin-left:6px;font-family:'JetBrains Mono',monospace;font-weight:700;letter-spacing:0.05em}
+.badge-free{background:rgba(34,197,94,0.15);color:var(--green)}
+.badge-pro{background:var(--gold-bg);color:var(--gold)}
+.ver-desc{font-size:11px;color:var(--text3);margin-top:4px;font-weight:400}
+.ver-panel{display:none}.ver-panel.active-panel{display:block}
+
+/* Multi-AI agent rənglər */
+.ai-tag{display:inline-flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;padding:2px 8px;border-radius:3px;letter-spacing:0.05em;border:1px solid}
+.ai-claude{color:#C9A84C;background:rgba(201,168,76,0.1);border-color:rgba(201,168,76,0.25)}
+.ai-gemini{color:#60A5FA;background:rgba(96,165,250,0.1);border-color:rgba(96,165,250,0.25)}
+.ai-gpt{color:#22C55E;background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.25)}
+.ai-grok{color:#A78BFA;background:rgba(167,139,250,0.1);border-color:rgba(167,139,250,0.25)}
+
+.multi-ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+.mai-row{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:var(--bg4);border:1px solid var(--border);border-radius:var(--radius-xs);font-size:11px}
+.mai-agent{font-family:'JetBrains Mono',monospace;color:var(--text2);font-size:10px}
+.mai-name{color:var(--text);font-weight:500;font-size:11px;margin:2px 0}
+
+.cost-compare{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.cost-box{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px}
+.cost-box.highlight{border-color:var(--gold-border);background:var(--gold-bg)}
+.cost-title{font-size:10px;font-weight:700;letter-spacing:0.1em;color:var(--text3);font-family:'JetBrains Mono',monospace;margin-bottom:8px;text-transform:uppercase}
+.cost-item{display:flex;justify-content:space-between;font-size:11px;padding:3px 0;border-bottom:1px solid var(--border);color:var(--text2)}
+.cost-item:last-child{border-bottom:none;font-weight:700;color:var(--text);margin-top:4px;padding-top:6px}
+.cost-free{color:var(--green)}
+.cost-paid{color:var(--gold)}
+
+@media(max-width:768px){
+  .multi-ai-grid{grid-template-columns:1fr}
+  .cost-compare{grid-template-columns:1fr}
+}
+</style>
+
+<!-- VERSİYA DÜYMƏLƏRİ -->
+<div class="ver-switch">
+  <button class="ver-btn active-ver" onclick="switchVer('free',this)">
+    🚀 FREE VERSİYA <span class="ver-badge badge-free">$0/AY</span>
+    <div class="ver-desc">Pulsuz AI limitləri · Demo hesab · Kompüterdə test</div>
+  </button>
+  <button class="ver-btn" onclick="switchVer('pro',this)">
+    ⚡ PRO VERSİYA <span class="ver-badge badge-pro">~$28/AY</span>
+    <div class="ver-desc">Multi-AI · Real broker · 7/24 server · Limitsiz</div>
+  </button>
+</div>
+
+<!-- ══════════════════════════════════════
+     FREE VERSİYA PANELİ
+══════════════════════════════════════ -->
+<div class="ver-panel active-panel" id="vp-free">
+
+  <div class="info-box" style="margin-bottom:16px">
+    <span style="font-size:14px;flex-shrink:0">✅</span>
+    <div class="info-text">
+      <strong>FREE Plan:</strong> Bütün AI-lar pulsuz versiyalarla işləyir. Gündə 30 dəq üçün limitlər yetərlidir. Demo hesabda real bazar qiymətləriylə test edərsən. Nəticə sabitləşəndə PRO-ya keç.
+    </div>
+  </div>
+
+  <!-- Xərc cədvəli -->
+  <div class="cost-compare" style="margin-bottom:16px">
+    <div class="cost-box highlight">
+      <div class="cost-title">FREE — $0/ay</div>
+      <div class="cost-item"><span>Claude Free</span><span class="cost-free">~20 mesaj/gün</span></div>
+      <div class="cost-item"><span>Gemini Free</span><span class="cost-free">1500 req/gün</span></div>
+      <div class="cost-item"><span>GPT Free kredit</span><span class="cost-free">$5 başlanğıc</span></div>
+      <div class="cost-item"><span>Grok Free</span><span class="cost-free">Məhdud</span></div>
+      <div class="cost-item"><span>Server</span><span class="cost-free">Kompüterdə</span></div>
+      <div class="cost-item"><span>CƏMİ</span><span class="cost-free">$0/ay</span></div>
+    </div>
+    <div class="cost-box">
+      <div class="cost-title">Multi-AI Bölgüsü</div>
+      <div class="cost-item"><span>Agent 0,4,6,7,10,12</span><span class="ai-tag ai-claude">Claude</span></div>
+      <div class="cost-item"><span>Agent 1,2,13</span><span class="ai-tag ai-gemini">Gemini</span></div>
+      <div class="cost-item"><span>Agent 5,8,9,11</span><span class="ai-tag ai-gpt">GPT</span></div>
+      <div class="cost-item"><span>Agent 3</span><span class="ai-tag ai-grok">Grok</span></div>
+      <div class="cost-item"><span>Gündəlik limit</span><span style="color:var(--text2);font-size:10px">30 dəq üçün yetər</span></div>
+    </div>
+  </div>
+
+  <div class="prog-bar-big">
+    <div class="prog-label">
+      <span class="prog-title">FREE Qurulum Proqresi</span>
+      <span class="prog-pct" id="free-pct">0%</span>
+    </div>
+    <div class="prog-track"><div class="prog-inner" id="free-prog" style="width:0%"></div></div>
+  </div>
+
+  <div class="setup-track">
+
+    <!-- FREE ADDIM 1 -->
+    <div class="setup-step">
+      <div class="step-left"><div class="step-circle" id="fsc-1" onclick="toggleFreeStep(1)">1</div><div class="step-line" id="fsl-1"></div></div>
+      <div class="step-body">
+        <div class="step-header" onclick="toggleFreeContent(1)">
+          <span class="step-day">GÜN 1</span>
+          <span class="step-title">AI Hesabları Aç — Hamısı Pulsuz</span>
+          <span style="font-size:10px;color:var(--text3);margin-left:auto" id="fsh-1">▼ aç</span>
+        </div>
+        <div class="step-content" id="fsc-body-1">
+          <div class="info-box"><span style="font-size:14px;flex-shrink:0">ℹ️</span><div class="info-text">Hər sayta daxil ol, hesab aç. <strong>Pulsuz plan seç</strong> — kredit kartı tələb etmir. Yeni Gmail ilə qeydiyyatdan keç.</div></div>
+
+          <div class="platform-row">
+            <span class="p-num">1</span>
+            <span class="p-name">anthropic.com</span>
+            <span class="p-why">Claude Free · ~20 mesaj/gün · Agent 0,4,6,7</span>
+            <a href="https://anthropic.com" target="_blank" class="p-link">anthropic.com →</a>
+          </div>
+          <div class="platform-row">
+            <span class="p-num">2</span>
+            <span class="p-name">aistudio.google.com</span>
+            <span class="p-why">Gemini Free · 1500 req/gün · Agent 1,2,13</span>
+            <a href="https://aistudio.google.com" target="_blank" class="p-link">aistudio.google.com →</a>
+          </div>
+          <div class="platform-row">
+            <span class="p-num">3</span>
+            <span class="p-name">platform.openai.com</span>
+            <span class="p-why">GPT · $5 pulsuz kredit · Agent 5,8,9,11</span>
+            <a href="https://platform.openai.com" target="_blank" class="p-link">openai.com →</a>
+          </div>
+          <div class="platform-row">
+            <span class="p-num">4</span>
+            <span class="p-name">console.x.ai</span>
+            <span class="p-why">Grok Free · Twitter/X analizi · Agent 3</span>
+            <a href="https://console.x.ai" target="_blank" class="p-link">console.x.ai →</a>
+          </div>
+          <div class="platform-row">
+            <span class="p-num">5</span>
+            <span class="p-name">newsapi.org</span>
+            <span class="p-why">Xəbər API · 1000 req/gün pulsuz</span>
+            <a href="https://newsapi.org" target="_blank" class="p-link">newsapi.org →</a>
+          </div>
+
+          <div class="multi-ai-grid" style="margin-top:12px">
+            <div class="mai-row"><div><div class="mai-agent">AGENT 0,4,6,7,10,12</div><div class="mai-name">Analiz, Risk, Qərar</div></div><span class="ai-tag ai-claude">Claude</span></div>
+            <div class="mai-row"><div><div class="mai-agent">AGENT 1,2,13</div><div class="mai-name">Xəbər, Təqvim, Bildiriş</div></div><span class="ai-tag ai-gemini">Gemini</span></div>
+            <div class="mai-row"><div><div class="mai-agent">AGENT 5,8,9,11</div><div class="mai-name">Texniki, Kod, Mühasib</div></div><span class="ai-tag ai-gpt">GPT</span></div>
+            <div class="mai-row"><div><div class="mai-agent">AGENT 3</div><div class="mai-name">Sosial Media</div></div><span class="ai-tag ai-grok">Grok</span></div>
+          </div>
+
+          <div class="checklist">
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">Claude hesabı açdım — pulsuz plan</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">Gemini (AI Studio) hesabı açdım — API açarı aldım</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">OpenAI hesabı açdım — $5 pulsuz kredit aktivdir</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">Grok hesabı açdım</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">NewsAPI pulsuz hesab açdım</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">Bütün API açarlarını güvənli yerdə saxladım</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FREE ADDIM 2 -->
+    <div class="setup-step">
+      <div class="step-left"><div class="step-circle" id="fsc-2" onclick="toggleFreeStep(2)">2</div><div class="step-line" id="fsl-2"></div></div>
+      <div class="step-body">
+        <div class="step-header" onclick="toggleFreeContent(2)">
+          <span class="step-day">GÜN 2</span>
+          <span class="step-title">Demo Broker Hesablar — Pul Yoxdur</span>
+          <span style="font-size:10px;color:var(--text3);margin-left:auto" id="fsh-2">▼ aç</span>
+        </div>
+        <div class="step-content" id="fsc-body-2">
+          <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text"><strong>Demo = Saxta pul, Real qiymətlər.</strong> Heç bir real pul qoyma. KYC üçün pasaport lazım ola bilər.</div></div>
+          <div class="platform-row"><span class="p-num">1</span><span class="p-name">ICMarkets.com</span><span class="p-why">Demo MT5 — Forex, Qızıl, Neft · Real qiymətlər</span><a href="https://icmarkets.com" target="_blank" class="p-link">icmarkets.com →</a></div>
+          <div class="platform-row"><span class="p-num">2</span><span class="p-name">Alpaca.markets</span><span class="p-why">Paper Trading — ABŞ səhmləri · Pulsuz</span><a href="https://alpaca.markets" target="_blank" class="p-link">alpaca.markets →</a></div>
+          <div class="platform-row"><span class="p-num">3</span><span class="p-name">Binance Testnet</span><span class="p-why">Kripto testnet — Saxta BTC/ETH</span><a href="https://testnet.binance.vision" target="_blank" class="p-link">testnet →</a></div>
+          <div class="checklist">
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">ICMarkets Demo MT5 hesabı açdım — qiymətlər gəlir</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">Alpaca Paper Trading hesabı + API açarı aldım</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">Binance Testnet hesabı açdım</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FREE ADDIM 3 -->
+    <div class="setup-step">
+      <div class="step-left"><div class="step-circle" id="fsc-3" onclick="toggleFreeStep(3)">3</div><div class="step-line" id="fsl-3"></div></div>
+      <div class="step-body">
+        <div class="step-header" onclick="toggleFreeContent(3)">
+          <span class="step-day">GÜN 3</span>
+          <span class="step-title">VÖEN + Kompüter Qurulumu</span>
+          <span style="font-size:10px;color:var(--text3);margin-left:auto" id="fsh-3">▼ aç</span>
+        </div>
+        <div class="step-content" id="fsc-body-3">
+          <div class="platform-row"><span class="p-num">1</span><span class="p-name">taxes.gov.az</span><span class="p-why">VÖEN — Pulsuz, 4 nəfər ayrı-ayrı</span><a href="https://taxes.gov.az" target="_blank" class="p-link">taxes.gov.az →</a></div>
+          <div class="platform-row"><span class="p-num">2</span><span class="p-name">python.org</span><span class="p-why">Python 3.10+ — Kompüterə qur</span><a href="https://python.org" target="_blank" class="p-link">python.org →</a></div>
+          <div class="platform-row"><span class="p-num">3</span><span class="p-name">code.visualstudio.com</span><span class="p-why">VS Code — Kod redaktoru</span><a href="https://code.visualstudio.com" target="_blank" class="p-link">vscode →</a></div>
+          <div class="platform-row"><span class="p-num">4</span><span class="p-name">metatrader5.com</span><span class="p-why">MT5 — Demo bağlantı üçün</span><a href="https://metatrader5.com" target="_blank" class="p-link">mt5 →</a></div>
+          <div class="checklist">
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">VÖEN aldım (taxes.gov.az)</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">Python 3.10+ quruldu</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">VS Code quruldu</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">MT5 quruldu — Demo hesaba giriş etdim</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FREE ADDIM 4 -->
+    <div class="setup-step">
+      <div class="step-left"><div class="step-circle" id="fsc-4" onclick="toggleFreeStep(4)">4</div><div class="step-line" id="fsl-4"></div></div>
+      <div class="step-body">
+        <div class="step-header" onclick="toggleFreeContent(4)">
+          <span class="step-day">GÜN 4</span>
+          <span class="step-title">Multi-AI Paketləri Qur</span>
+          <span style="font-size:10px;color:var(--text3);margin-left:auto" id="fsh-4">▼ aç</span>
+        </div>
+        <div class="step-content" id="fsc-body-4">
+          <div class="code-label">Bütün AI kitabxanaları — bir əmrdə</div>
+          <div class="code-block"><pre>pip install anthropic google-generativeai openai requests</pre><button class="copy-btn" onclick="copyCode(this,'pip install anthropic google-generativeai openai requests')">KOPYALA</button></div>
+          <div class="code-label">Ticarət & Bazar</div>
+          <div class="code-block"><pre>pip install MetaTrader5 python-binance alpaca-trade-api ccxt yfinance</pre><button class="copy-btn" onclick="copyCode(this,'pip install MetaTrader5 python-binance alpaca-trade-api ccxt yfinance')">KOPYALA</button></div>
+          <div class="code-label">Data analizi & Bildiriş</div>
+          <div class="code-block"><pre>pip install pandas numpy scipy scikit-learn python-telegram-bot schedule</pre><button class="copy-btn" onclick="copyCode(this,'pip install pandas numpy scipy scikit-learn python-telegram-bot schedule')">KOPYALA</button></div>
+          <div class="checklist">
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">AI kitabxanaları quruldu (anthropic, openai, google-generativeai)</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">Ticarət kitabxanaları quruldu (MT5, binance, alpaca)</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">Data kitabxanaları quruldu (pandas, numpy)</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FREE ADDIM 5 -->
+    <div class="setup-step">
+      <div class="step-left"><div class="step-circle" id="fsc-5" onclick="toggleFreeStep(5)">5</div><div class="step-line" id="fsl-5"></div></div>
+      <div class="step-body">
+        <div class="step-header" onclick="toggleFreeContent(5)">
+          <span class="step-day">GÜN 5</span>
+          <span class="step-title">Telegram Botu Qur</span>
+          <span style="font-size:10px;color:var(--text3);margin-left:auto" id="fsh-5">▼ aç</span>
+        </div>
+        <div class="step-content" id="fsc-body-5">
+          <div style="background:var(--bg4);border:1px solid var(--border);border-radius:var(--radius-xs);padding:14px;margin-bottom:12px;font-size:12px;color:var(--text2);line-height:1.9">
+            1. Telegram → <strong style="color:var(--gold)">@BotFather</strong> yaz<br>
+            2. <strong style="color:var(--gold)">/newbot</strong> → ad ver → TOKEN al<br>
+            3. <strong style="color:var(--gold)">NEXUS</strong> qrupu yarat → 4 nəfər + bot əlavə et<br>
+            4. Chat ID almaq üçün:
+          </div>
+          <div class="code-block"><pre>https://api.telegram.org/bot&lt;TOKEN&gt;/getUpdates</pre><button class="copy-btn" onclick="copyCode(this,'https://api.telegram.org/bot<TOKEN>/getUpdates')">KOPYALA</button></div>
+          <div class="checklist">
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">Bot yaratdım + TOKEN aldım</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">NEXUS qrupu + 4 nəfər + bot əlavə edildi</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">Chat ID aldım — test mesajı gəldi</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FREE ADDIM 6 -->
+    <div class="setup-step">
+      <div class="step-left"><div class="step-circle" id="fsc-6" onclick="toggleFreeStep(6)">6</div><div class="step-line" id="fsl-6"></div></div>
+      <div class="step-body">
+        <div class="step-header" onclick="toggleFreeContent(6)">
+          <span class="step-day">GÜN 6-7</span>
+          <span class="step-title">Test — Hər şey İşləyirmi?</span>
+          <span style="font-size:10px;color:var(--text3);margin-left:auto" id="fsh-6">▼ aç</span>
+        </div>
+        <div class="step-content" id="fsc-body-6">
+          <div class="code-label">Claude test</div>
+          <div class="code-block"><pre>import anthropic
+client = anthropic.Anthropic(api_key="YOUR_KEY")
+msg = client.messages.create(model="claude-sonnet-4-20250514",
+  max_tokens=50, messages=[{"role":"user","content":"test"}])
+print("Claude ✓", msg.content[0].text)</pre><button class="copy-btn" onclick="copyCode(this,'import anthropic\nclient = anthropic.Anthropic(api_key=\"YOUR_KEY\")')">KOPYALA</button></div>
+          <div class="code-label">Gemini test</div>
+          <div class="code-block"><pre>import google.generativeai as genai
+genai.configure(api_key="YOUR_GEMINI_KEY")
+model = genai.GenerativeModel("gemini-1.5-flash")
+print("Gemini ✓", model.generate_content("test").text)</pre><button class="copy-btn" onclick="copyCode(this,'import google.generativeai as genai\ngenai.configure(api_key=\"YOUR_KEY\")')">KOPYALA</button></div>
+          <div class="code-label">GPT test</div>
+          <div class="code-block"><pre>from openai import OpenAI
+client = OpenAI(api_key="YOUR_KEY")
+r = client.chat.completions.create(model="gpt-4o-mini",
+  messages=[{"role":"user","content":"test"}])
+print("GPT ✓", r.choices[0].message.content)</pre><button class="copy-btn" onclick="copyCode(this,'from openai import OpenAI\nclient = OpenAI(api_key=\"YOUR_KEY\")')">KOPYALA</button></div>
+          <div class="checklist">
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">Claude cavab verdi ✓</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">Gemini cavab verdi ✓</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">GPT cavab verdi ✓</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">MT5 Demo qiymətlər gəlir ✓</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">Telegram mesaj gəldi ✓</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'free')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">🚀 FREE qurulum tamamdır — Demo ticarətə keçirəm!</div></div>
+          </div>
+          <div class="info-box" style="margin-top:12px"><span style="font-size:14px;flex-shrink:0">🎯</span><div class="info-text"><strong>Bundan sonra:</strong> Mənə yaz — Multi-AI agent kodunu birlikdə yazırıq. Gündə 30 dəq demo test başlayır.</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end free setup-track -->
+</div><!-- end vp-free -->
+
+
+<!-- ══════════════════════════════════════
+     PRO VERSİYA PANELİ
+══════════════════════════════════════ -->
+<div class="ver-panel" id="vp-pro">
+
+  <div class="info-box" style="margin-bottom:16px;border-color:var(--gold-border);background:var(--gold-bg)">
+    <span style="font-size:14px;flex-shrink:0">⚡</span>
+    <div class="info-text" style="color:var(--text)">
+      <strong style="color:var(--gold)">PRO Plan:</strong> Demo-da sabit nəticə aldıqdan sonra bu versiyaya keç. Real AI API-lar, 7/24 server, real broker. Multi-AI arxitektura tam aktiv — aylıq ~$28.
+    </div>
+  </div>
+
+  <!-- PRO Xərc -->
+  <div class="cost-compare" style="margin-bottom:16px">
+    <div class="cost-box">
+      <div class="cost-title">PRO — ~$28/ay</div>
+      <div class="cost-item"><span>Claude API Pro</span><span class="cost-paid">~$10/ay</span></div>
+      <div class="cost-item"><span>Gemini Pro</span><span class="cost-paid">~$5/ay</span></div>
+      <div class="cost-item"><span>GPT-4o API</span><span class="cost-paid">~$8/ay</span></div>
+      <div class="cost-item"><span>Grok API</span><span class="cost-paid">~$5/ay</span></div>
+      <div class="cost-item"><span>DigitalOcean</span><span class="cost-free">$0 (200$ kredit)</span></div>
+      <div class="cost-item"><span>CƏMİ</span><span class="cost-paid">~$28/ay</span></div>
+    </div>
+    <div class="cost-box highlight">
+      <div class="cost-title">PRO Üstünlükləri</div>
+      <div class="cost-item"><span>Limit</span><span style="color:var(--green)">Limitsiz</span></div>
+      <div class="cost-item"><span>Sürət</span><span style="color:var(--green)">Çox sürətli</span></div>
+      <div class="cost-item"><span>Server</span><span style="color:var(--green)">7/24 aktiv</span></div>
+      <div class="cost-item"><span>Broker</span><span style="color:var(--green)">Real pul</span></div>
+      <div class="cost-item"><span>Əvvəlki plan (~$82)</span><span style="color:var(--green)">70% ucuz</span></div>
+    </div>
+  </div>
+
+  <div class="prog-bar-big">
+    <div class="prog-label">
+      <span class="prog-title">PRO Qurulum Proqresi</span>
+      <span class="prog-pct" id="pro-pct">0%</span>
+    </div>
+    <div class="prog-track"><div class="prog-inner" id="pro-prog" style="width:0%"></div></div>
+  </div>
+
+  <div class="setup-track">
+
+    <!-- PRO ADDIM 1 -->
+    <div class="setup-step">
+      <div class="step-left"><div class="step-circle" id="psc-1" onclick="toggleProStep(1)">1</div><div class="step-line" id="psl-1"></div></div>
+      <div class="step-body">
+        <div class="step-header" onclick="toggleProContent(1)">
+          <span class="step-day">GÜN 1</span>
+          <span class="step-title">Pro AI API Açarları Al</span>
+          <span style="font-size:10px;color:var(--text3);margin-left:auto" id="psh-1">▼ aç</span>
+        </div>
+        <div class="step-content" id="psc-body-1">
+          <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text"><strong>Ödəniş tələb olunur.</strong> Kredit kartı ilə qeydiyyat. Hər ay istifadəyə görə silinir.</div></div>
+          <div class="platform-row"><span class="p-num">1</span><span class="p-name">anthropic.com</span><span class="p-why">Claude Pro API · Limitsiz · Agent 0,4,6,7,10,12</span><a href="https://anthropic.com" target="_blank" class="p-link">anthropic.com →</a></div>
+          <div class="platform-row"><span class="p-num">2</span><span class="p-name">aistudio.google.com</span><span class="p-why">Gemini Pro · ~$5/ay · Agent 1,2,13</span><a href="https://aistudio.google.com" target="_blank" class="p-link">aistudio →</a></div>
+          <div class="platform-row"><span class="p-num">3</span><span class="p-name">platform.openai.com</span><span class="p-why">GPT-4o API · ~$8/ay · Agent 5,8,9,11</span><a href="https://platform.openai.com" target="_blank" class="p-link">openai →</a></div>
+          <div class="platform-row"><span class="p-num">4</span><span class="p-name">console.x.ai</span><span class="p-why">Grok Pro · ~$5/ay · Agent 3</span><a href="https://console.x.ai" target="_blank" class="p-link">grok →</a></div>
+          <div class="platform-row"><span class="p-num">5</span><span class="p-name">newsapi.org</span><span class="p-why">NewsAPI Pro · ~$0 (pulsuz plan yetər)</span><a href="https://newsapi.org" target="_blank" class="p-link">newsapi →</a></div>
+          <div class="platform-row"><span class="p-num">6</span><span class="p-name">alphavantage.co</span><span class="p-why">Bazar məlumatı · Pulsuz plan yetər</span><a href="https://alphavantage.co" target="_blank" class="p-link">alphavantage →</a></div>
+          <div class="checklist">
+            <div class="check-item" onclick="toggleCheck(this,'pro')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">Claude Pro API açarı aldım — kredit kartı əlavə etdim</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'pro')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">Gemini Pro API açarı aldım</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'pro')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">OpenAI GPT-4o API açarı aldım</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'pro')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">Grok API açarı aldım</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'pro')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">NewsAPI + AlphaVantage açarları saxlandı</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRO ADDIM 2 -->
+    <div class="setup-step">
+      <div class="step-left"><div class="step-circle" id="psc-2" onclick="toggleProStep(2)">2</div><div class="step-line" id="psl-2"></div></div>
+      <div class="step-body">
+        <div class="step-header" onclick="toggleProContent(2)">
+          <span class="step-day">GÜN 2</span>
+          <span class="step-title">Real Broker Hesablar</span>
+          <span style="font-size:10px;color:var(--text3);margin-left:auto" id="psh-2">▼ aç</span>
+        </div>
+        <div class="step-content" id="psc-body-2">
+          <div class="warn-box"><span class="warn-icon">⚠️</span><div class="warn-text"><strong>Pasaport + Ünvan sənədi (KYC) mütləq lazımdır.</strong> API açarı yalnız TİCARƏT icazəsi ilə — pul çəkmə icazəsi VERMİR!</div></div>
+          <div class="platform-row"><span class="p-num">1</span><span class="p-name">ICMarkets.com</span><span class="p-why">Forex, Qızıl, Neft · ASIC tənzimli · Min $200</span><a href="https://icmarkets.com" target="_blank" class="p-link">icmarkets.com →</a></div>
+          <div class="platform-row"><span class="p-num">2</span><span class="p-name">Binance.com</span><span class="p-why">Kripto · KYC + API (yalnız ticarət) · Min $50</span><a href="https://binance.com" target="_blank" class="p-link">binance.com →</a></div>
+          <div class="platform-row"><span class="p-num">3</span><span class="p-name">Alpaca.markets</span><span class="p-why">ABŞ Səhm · Min $100</span><a href="https://alpaca.markets" target="_blank" class="p-link">alpaca.markets →</a></div>
+          <div class="checklist">
+            <div class="check-item" onclick="toggleCheck(this,'pro')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">ICMarkets Real hesab — KYC etdim — pul köçürdüm</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'pro')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">Binance Real — KYC + API (yalnız ticarət icazəsi)</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'pro')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">Alpaca Real — hesab açdım</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRO ADDIM 3 -->
+    <div class="setup-step">
+      <div class="step-left"><div class="step-circle" id="psc-3" onclick="toggleProStep(3)">3</div><div class="step-line" id="psl-3"></div></div>
+      <div class="step-body">
+        <div class="step-header" onclick="toggleProContent(3)">
+          <span class="step-day">GÜN 3</span>
+          <span class="step-title">DigitalOcean Server — 7/24</span>
+          <span style="font-size:10px;color:var(--text3);margin-left:auto" id="psh-3">▼ aç</span>
+        </div>
+        <div class="step-content" id="psc-body-3">
+          <div class="info-box"><span style="font-size:14px;flex-shrink:0">ℹ️</span><div class="info-text">DigitalOcean <strong>200$ pulsuz kredit</strong> verir — 8 ay pulsuz işləyir. Kompüter söndüsə da sistem aktiv qalır.</div></div>
+          <div class="platform-row"><span class="p-num">1</span><span class="p-name">digitalocean.com</span><span class="p-why">Ubuntu 22.04 · 4GB RAM · $24/ay → 8 ay pulsuz</span><a href="https://digitalocean.com" target="_blank" class="p-link">digitalocean.com →</a></div>
+          <div class="platform-row"><span class="p-num">2</span><span class="p-name">tailscale.com</span><span class="p-why">VPN — Server + 3 kompüter birbirinə bağlansın</span><a href="https://tailscale.com" target="_blank" class="p-link">tailscale.com →</a></div>
+          <div class="code-label">Server qurulumu (SSH-dən)</div>
+          <div class="code-block"><pre>apt update && apt upgrade -y
+apt install python3-pip git -y
+pip3 install anthropic google-generativeai openai
+pip3 install MetaTrader5 python-binance alpaca-trade-api
+pip3 install pandas numpy python-telegram-bot schedule
+curl -fsSL https://tailscale.com/install.sh | sh && tailscale up</pre><button class="copy-btn" onclick="copyCode(this,'apt update && apt upgrade -y\napt install python3-pip git -y\npip3 install anthropic google-generativeai openai\npip3 install MetaTrader5 python-binance alpaca-trade-api\npip3 install pandas numpy python-telegram-bot schedule')">KOPYALA</button></div>
+          <div class="checklist">
+            <div class="check-item" onclick="toggleCheck(this,'pro')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">DigitalOcean Droplet yaratdım — Ubuntu 22.04 · 4GB</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'pro')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">SSH ilə serverə qoşuldum — paketlər quruldu</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'pro')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">Tailscale quruldu — server + 3 kompüter bağlı</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRO ADDIM 4 -->
+    <div class="setup-step">
+      <div class="step-left"><div class="step-circle" id="psc-4" onclick="toggleProStep(4)">4</div><div class="step-line" id="psl-4" style="display:none"></div></div>
+      <div class="step-body">
+        <div class="step-header" onclick="toggleProContent(4)">
+          <span class="step-day">GÜN 4</span>
+          <span class="step-title">Tam Test — Sistem Hazırdır</span>
+          <span style="font-size:10px;color:var(--text3);margin-left:auto" id="psh-4">▼ aç</span>
+        </div>
+        <div class="step-content" id="psc-body-4">
+          <div class="multi-ai-grid">
+            <div class="mai-row"><div><div class="mai-agent">Claude API</div><div class="mai-name">Agent 0,4,6,7,10,12</div></div><span class="ai-tag ai-claude">Test et</span></div>
+            <div class="mai-row"><div><div class="mai-agent">Gemini API</div><div class="mai-name">Agent 1,2,13</div></div><span class="ai-tag ai-gemini">Test et</span></div>
+            <div class="mai-row"><div><div class="mai-agent">GPT API</div><div class="mai-name">Agent 5,8,9,11</div></div><span class="ai-tag ai-gpt">Test et</span></div>
+            <div class="mai-row"><div><div class="mai-agent">Grok API</div><div class="mai-name">Agent 3</div></div><span class="ai-tag ai-grok">Test et</span></div>
+          </div>
+          <div class="checklist">
+            <div class="check-item" onclick="toggleCheck(this,'pro')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">Bütün 4 AI API-ı cavab verir</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'pro')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">ICMarkets Real hesabına bağlantı var</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'pro')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">Binance Real API işləyir</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'pro')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">Server 7/24 aktiv — Tailscale bağlı</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'pro')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">Telegram bildiriş gəldi</div></div>
+            <div class="check-item" onclick="toggleCheck(this,'pro')"><div class="check-box"><span class="check-tick">✓</span></div><div class="check-text">⚡ PRO SİSTEM HAZIRDIR — Real ticarət başlayır!</div></div>
+          </div>
+          <div class="info-box" style="margin-top:12px;border-color:var(--gold-border);background:var(--gold-bg)">
+            <span style="font-size:14px;flex-shrink:0">🏆</span>
+            <div class="info-text" style="color:var(--text)"><strong style="color:var(--gold)">Növbəti addım:</strong> Multi-AI agent kodu — Claude koordinasiya edir, Gemini xəbər çəkir, GPT analiz edir, Grok sosial media izləyir. Birlikdə yazırıq.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end pro setup-track -->
+</div><!-- end vp-pro -->
+
+
+<!-- VERSİYA SEÇİCİ JS — BUNLARI </script> ÖNÜNƏ YAPIŞDIR -->
+<script>
+function switchVer(v, btn) {
+  document.querySelectorAll('.ver-btn').forEach(b => b.classList.remove('active-ver'));
+  document.querySelectorAll('.ver-panel').forEach(p => p.classList.remove('active-panel'));
+  btn.classList.add('active-ver');
+  document.getElementById('vp-' + v).classList.add('active-panel');
+}
+
+function toggleFreeContent(n) {
+  const c = document.getElementById('fsc-body-' + n);
+  const h = document.getElementById('fsh-' + n);
+  const open = c.classList.contains('open');
+  c.classList.toggle('open');
+  h.textContent = open ? '▼ aç' : '▲ qapat';
+}
+function toggleFreeStep(n) {
+  const sc = document.getElementById('fsc-' + n);
+  const sl = document.getElementById('fsl-' + n);
+  sc.classList.toggle('done');
+  if (sl) sl.classList.toggle('done');
+  if (!sc.classList.contains('done') && !document.getElementById('fsc-body-' + n).classList.contains('open')) toggleFreeContent(n);
+  updateFreeProgress();
+}
+function updateFreeProgress() {
+  const all = document.querySelectorAll('#vp-free .check-item').length;
+  const done = document.querySelectorAll('#vp-free .check-item.done-check').length;
+  const pct = all > 0 ? Math.round(done / all * 100) : 0;
+  const el = document.getElementById('free-pct');
+  const pg = document.getElementById('free-prog');
+  if (el) el.textContent = pct + '%';
+  if (pg) pg.style.width = pct + '%';
+}
+
+function toggleProContent(n) {
+  const c = document.getElementById('psc-body-' + n);
+  const h = document.getElementById('psh-' + n);
+  const open = c.classList.contains('open');
+  c.classList.toggle('open');
+  h.textContent = open ? '▼ aç' : '▲ qapat';
+}
+function toggleProStep(n) {
+  const sc = document.getElementById('psc-' + n);
+  const sl = document.getElementById('psl-' + n);
+  sc.classList.toggle('done');
+  if (sl) sl.classList.toggle('done');
+  if (!sc.classList.contains('done') && !document.getElementById('psc-body-' + n).classList.contains('open')) toggleProContent(n);
+  updateProProgress();
+}
+function updateProProgress() {
+  const all = document.querySelectorAll('#vp-pro .check-item').length;
+  const done = document.querySelectorAll('#vp-pro .check-item.done-check').length;
+  const pct = all > 0 ? Math.round(done / all * 100) : 0;
+  const el = document.getElementById('pro-pct');
+  const pg = document.getElementById('pro-prog');
+  if (el) el.textContent = pct + '%';
+  if (pg) pg.style.width = pct + '%';
+}
+
+// FREE checkboxları progress-ə bağla
+document.querySelectorAll && document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('#vp-free .check-item').forEach(el => {
+    el.addEventListener('click', updateFreeProgress);
+  });
+  document.querySelectorAll('#vp-pro .check-item').forEach(el => {
+    el.addEventListener('click', updateProProgress);
+  });
+});
+</script>
+
   <div class="prog-bar-big">
     <div class="prog-label">
       <span class="prog-title">Ümumi Qurulum Proqresi</span>
